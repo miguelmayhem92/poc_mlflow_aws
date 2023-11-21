@@ -1,0 +1,65 @@
+### to setup mlflow server in ec2
+prereq
+
+* have aws cli
+* python project with awscli and boto3 set to the ec2 instance
+
+1. create users in the IAM with specifici credential
+2. get the user access keys
+3. (in git cli) using aws configure introduce the credentials
+4. create s3 bucket
+
+create ec2 instance
+
+* with key pair for loging
+* with netwrok settings: ssh, https and http
+* create instance
+
+in the instance launch the following comands:
+
+sudo apt update
+sudo apt install python3-pip
+sudo pip3 install pipenv
+sudo pip3 install virtualenv
+mkdir "dir name"
+cd "dir"
+pipenv install mlflow
+pipenv install awscli
+pipenv install boto3
+
+to configure aws, in the same dir run
+
+pipenv shell
+(in the shell run "aws configure" and add the user credentials)
+
+then configure server ports in the same shell
+
+mlflow server -h 0.0.0.0 --default-artifact-root s3://{bucket}
+
+then in the ec2 consolone and in the instance
+
+* look for security
+* then security groups
+* then add a new rule: custom tcp 5000 and 0.0.0.0/0
+
+copy the Public IPv4 DNS from the ec2 console of the instance  E.G.:
+(ec2-13-38-251-247.eu-west-3.compute.amazonaws.com)
+
+in git console run
+
+export MLFLOW_TRACKING_URI=http://ec2-13-38-251-247.eu-west-3.compute.amazonaws.com:5000/
+(do not  forget the http`://)
+and do not forget to set the new uri in the mlflow.set_tracking_uri(tracking_uri)
+
+
+
+to restart the instance after shut down:
+
+* relaunch the instance
+* a new ipv4 will be generated (keep in mind)
+* copyt the new ipv4
+export MLFLOW_TRACKING_URI=http://ec2-35-180-111-0.eu-west-3.compute.amazonaws.com:5000/
+* and the same in the mlflow.set_tracking_uri(tracking_uri)
+* and to open the ui just: open the instance, open the mlflow folder, and with pipenv shell type:
+mlflow server -h 0.0.0.0 -p 5000
+and use the new ipv4 to open the ui
