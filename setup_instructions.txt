@@ -4,13 +4,14 @@ prereq
 * have aws cli
 * python project with awscli and boto3 set to the ec2 instance
 
-1. create users in the IAM with specifici credential
+1. create users in the IAM with specific credential and policies (policies, s3 full access for now)
 2. get the user access keys
 3. (in git cli) using aws configure introduce the credentials
 4. create s3 bucket
 
 create ec2 instance
 
+* instance type ubuntu
 * with key pair for loging
 * with netwrok settings: ssh, https and http
 * create instance
@@ -36,7 +37,7 @@ then configure server ports in the same shell
 
 mlflow server -h 0.0.0.0 --default-artifact-root s3://{bucket}
 
-then in the ec2 consolone and in the instance
+then in the ec2 console and in the instance
 
 * look for security
 * then security groups
@@ -44,10 +45,15 @@ then in the ec2 consolone and in the instance
 
 copy the Public IPv4 DNS from the ec2 console of the instance  E.G.:
 (ec2-13-38-251-247.eu-west-3.compute.amazonaws.com)
+note that it can work with http or http:
+e.g:
+https://ec2-13-38-251-247.eu-west-3.compute.amazonaws.com:5000/
+
+
 
 in git console run
-
-export MLFLOW_TRACKING_URI=http://ec2-13-38-251-247.eu-west-3.compute.amazonaws.com:5000/
+(environement variable - but not necessary if  using mlflow.set_tracking_uri...)
+export MLFLOW_TRACKING_URI=http://ec2-13-38-251-247.eu-west-3.compute.amazonaws.com:5000/  #optional
 (do not  forget the http`://)
 and do not forget to set the new uri in the mlflow.set_tracking_uri(tracking_uri)
 
