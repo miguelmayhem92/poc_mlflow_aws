@@ -67,5 +67,5 @@ to restart the instance after shut down:
 export MLFLOW_TRACKING_URI=http://ec2-35-180-111-0.eu-west-3.compute.amazonaws.com:5000/
 * and the same in the mlflow.set_tracking_uri(tracking_uri)
 * and to open the ui just: open the instance, open the mlflow folder, and with pipenv shell type:
-mlflow server -h 0.0.0.0 -p 5000
+mlflow server -h 0.0.0.0 --default-artifact-root s3://{bucket} -p 5000
 and use the new ipv4 to open the ui
