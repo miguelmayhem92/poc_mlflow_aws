@@ -33,7 +33,8 @@ sudo service nginx restart
 then in the folder and evironement of mlflow 
 run 
 mlflow server -h localhost -p 8000 --default-artifact-root s3://poc-mlflow-repo
-
+or (full version)
+mlflow server -h localhost -p 8000 --default-artifact-root s3://{bucket} --backend-store-uri sqlite:///mydb.sqlite
 
 and in the notebook or code:
 os.environ['MLFLOW_TRACKING_USERNAME'] = 'user'
