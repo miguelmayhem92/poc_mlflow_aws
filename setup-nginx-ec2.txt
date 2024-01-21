@@ -1,0 +1,40 @@
+instaletion of nginx and apache2 for credentials (after mlflow deploy)
+
+sudo apt install apache2-utils
+sudo apt install nginx
+
+create user and password
+sudo htpasswd -c /etc/apache2/.htpasswd myuser
+
+nginx and mlflow might run in the same port, run the following
+
+sudo rm /etc/nginx/sites-enabled/default
+sudo vim /etc/nginx/sites-enabled/mlflow (create file)
+
+in the file copy and paste the following (in vim editor)
+
+server {
+    listen 5000;
+    server_name http://ec2-13-39-...1.eu-west-3.compute.amazonaws.com; 
+    auth_basic           "Administrator’s Area";
+    auth_basic_user_file /etc/apache2/.htpasswd;
+
+    location / {
+        proxy_pass http://localhost:8000;
+        include /etc/nginx/proxy_params;
+        proxy_redirect off;
+    }
+}
+
+restart nginx using:
+
+sudo service nginx restart
+
+then in the folder and evironement of mlflow 
+run 
+mlflow server -h localhost -p 8000 --default-artifact-root s3://poc-mlflow-repo
+
+
+and in the notebook or code:
+os.environ['MLFLOW_TRACKING_USERNAME'] = 'user'
+os.environ['MLFLOW_TRACKING_PASSWORD'] = 'user'
