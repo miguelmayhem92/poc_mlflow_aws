@@ -20,8 +20,9 @@ in the instance launch the following comands:
 
 sudo apt update
 sudo apt install python3-pip
-sudo pip3 install pipenv
-sudo pip3 install virtualenv
+sudo pip3 install pipenv  (sudo apt install pipx)
+(sudo pipx intall pipenv   sudo apt install pipenv)
+sudo pip3 install virtualenv (sudo pipx intall virtualenv  sudo apt install virtualenv)
 mkdir "dir name"
 cd "dir"
 pipenv install mlflow
@@ -35,7 +36,8 @@ pipenv shell
 
 then configure server ports in the same shell
 
-mlflow server -h 0.0.0.0 --default-artifact-root s3://{bucket}
+mlflow server -p 5000 -h 0.0.0.0 --default-artifact-root s3://{bucket} --backend-store-uri sqlite:///mydb.sqlite
+
 
 then in the ec2 console and in the instance
 
