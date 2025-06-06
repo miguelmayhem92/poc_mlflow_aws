@@ -9,20 +9,20 @@ prereq
 3. (in git cli) using aws configure introduce the credentials
 4. create s3 bucket
 
-create ec2 instance
+create ec2 instance T3.micro or t4g.micro
 
 * instance type ubuntu
 * with key pair for loging
 * with netwrok settings: ssh, https and http
+* volume memory (10 gbs)
 * create instance
 
 in the instance launch the following comands:
 
 sudo apt update
 sudo apt install python3-pip
-sudo pip3 install pipenv  (sudo apt install pipx)
-(sudo pipx intall pipenv   sudo apt install pipenv)
-sudo pip3 install virtualenv (sudo pipx intall virtualenv  sudo apt install virtualenv)
+sudo pip3 install pipenv   --- sudo apt install pipenv
+sudo pip3 install virtualenv ---- sudo apt install virtualenv
 mkdir "dir name"
 cd "dir"
 pipenv install mlflow
